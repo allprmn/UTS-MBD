@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  postgres_service:
+    image: postgres:15-alpine
+    container_name: postgres_AldiPramana
+    env_file:
+      - .env
+    ports:
+      - "22031:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  pgadmin_service:
+    image: dpage/pgadmin4
+    container_name: pgadmin_AldiPramana
+    env_file:
+      - .env
+    ports:
+      - "44031:80"
+    depends_on:
+      - postgres_service
+    restart: unless-stopped
+
+volumes:
+  pg_data:
